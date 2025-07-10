@@ -1,3 +1,5 @@
+import math
+
 def main():
     print("Hello World!")
 
@@ -84,4 +86,39 @@ def sequences():
 # variables()
 # string()
 # loops()
-sequences()
+#sequences()
+
+class Point():
+    def __init__(self, banana, y):
+        self.x = banana
+        self.y = y
+
+    def move(self, new_x, new_y):
+        self.x = new_x
+        self.y = new_y
+
+    def swap(self):
+        t = self.x
+        self.x = self.y
+        self.y = t
+
+    def distance_to_point(self, other):
+        distance = math.sqrt((self.x - other.x) ** 2 + (self.y - other.y) ** 2)
+        return distance
+
+def classes():
+    print("---- classes ----")
+    p1 = Point(3, 5)
+    p2 = Point(7, 18)
+    print(p1.x)
+    print(p2.y)
+
+    p1.move(19, 21)
+    print(p1.x)
+    p1.swap()
+    print(p1.x)
+
+    print(p1.distance_to_point(p2))
+
+
+classes()
