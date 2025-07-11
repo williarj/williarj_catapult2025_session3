@@ -16,7 +16,8 @@ class Raindrop:
         self.x = x
         self.y = y
         self.speed = random.randint(3, 15)
-
+        self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+        self.size = random.randint(4, 8)
 
     def move(self):
         """ Move the self.y value of the Raindrop down the screen (y increase) at the self.speed. """
@@ -36,9 +37,9 @@ class Raindrop:
         """ Draws this sprite onto the screen. """
         # TODO 9: Draw a vertical line that is 5 pixels long, 2 pixels thick,
         #      from the current position of this Raindrop (use either a black or blue color).
-        pygame.draw.line(self.screen, (0, 0, 150),
+        pygame.draw.line(self.screen, self.color,#(0, 0, 150),
                          (self.x, self.y),
-                         (self.x, self.y + 5), 2)
+                         (self.x, self.y + 6), self.size)
 
 
 class Hero:
@@ -134,7 +135,7 @@ def main():
     # TODO 15: Make a Hero, named alyssa, with appropriate images, starting at position x=700 y=400.
     alyssa = Hero(screen, 700, 400, "Alyssa_umbrella.png", "Alyssa.png")
     # TODO 23: Make a Cloud, named cloud, with appropriate images, starting at position x=300 y=50.
-    cloud = Cloud(screen, 300, 50, "cloud.png")
+    cloud = Cloud(screen, 300, 50, "another_cloud.png")
 
     # TODO 3: Enter the game loop, with a clock tick of 60 (or so) at each iteration.
     while True:
