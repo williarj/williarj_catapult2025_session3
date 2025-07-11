@@ -1,5 +1,6 @@
 import pygame
 import sys
+import fighter_missile_module as fm
 
 # TODO: when need import the fighter_missile_module
 # TODO: when need import the enemy_fleet_module
@@ -15,13 +16,25 @@ def main():
     # TODO 10: Create an EnemyFleet object (called enemy_fleet) with the screen and enemy_rows
     # TODO 1: Create a Fighter (called fighter)
 
+    fighter = fm.Fighter(screen, screen.get_width() // 2, screen.get_height() - 100)
     while True:
         clock.tick(60)
         for event in pygame.event.get():
             # TODO 5: If the event type is KEYDOWN and pressed_keys[pygame.K_SPACE] is True, then fire a missile
+            # Doing something once when a key is PRESSED
+            if event.type == pygame.KEYDOWN:
+                pressed_keys = pygame.key.get_pressed()
+                if pressed_keys[pygame.K_SPACE]:
+                    fighter.fire()
             if event.type == pygame.QUIT:
                 sys.exit()
 
+        # Doing something continually when a key is HELD DOWN
+        pressed_keys = pygame.key.get_pressed()
+        if pressed_keys[pygame.K_LEFT]:
+            fighter.move(-5)
+        if pressed_keys[pygame.K_RIGHT]:
+            fighter.move(5)
         screen.fill((0, 0, 0))
         # TODO 3: If pygame.K_LEFT is pressed and move the fighter left 5 (i.e. -5)
         # TODO 4: If pygame.K_RIGHT is pressed and move the fighter right 5
@@ -33,6 +46,12 @@ def main():
         # TODO 6: For each missile in the fighter missiles
         #   TODO 7: Move the missile
         #   TODO 8: Draw the missile
+
+        fighter.draw()
+        for missile in fighter.missiles:
+            missile.move()
+            missile.draw()
+        fighter.remove_exploded_missiles()
 
         # TODO 12: For each badguy in the enemy_fleet.badguys list
         #     TODO 13: For each missile in the fighter missiles
