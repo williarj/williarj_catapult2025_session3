@@ -2,26 +2,33 @@ import pygame
 import sys
 
 class Missile:
-    def __init__(self, screen, x):
+    def __init__(self, screen, x, y):
         # Store the data.  Initialize:   y to 591   and   has_exploded to False.
         # Note: the 591 comes from the screen height (650) minus the ship image height (59).  Best practice would be to
         #   pass in that value in case the ship image or screen height changes, but simplified here to always be 591.
-        pass
+        self.screen = screen
+        self.x = x
+        self.y = y
+        self.has_exploded = False
+        fire_sound = pygame.mixer.Sound("pew.wav")
+        fire_sound.play()
+
 
     def move(self):
         # Make self.y 5 smaller than it was (which will cause the Missile to move UP).
         # Note: you could've instead passed in a speed when you made a Missle, but all missles in the game are the same
         #   speed, so just using a hardcoded 5 is fine.
-        pass
+        self.y = self.y - 5
 
     def draw(self):
         # Draw a vertical red (or green) line on the screen for the missile, 8 pixels long,  4 pixels thick
         #   where the line starts at the current position of this Missile.
-        pass
+        pygame.draw.line(self.screen, (255, 0, 0), (self.x, self.y),
+                         (self.x, self.y+8), 8)
 
     def is_off_screen(self):
         # Return true if the y value of the missle is less than 0 (or -8 depending how how you draw) i.e. off the screen
-        pass
+        return self.y < -8
 
 
 class Fighter:
@@ -58,7 +65,8 @@ class Fighter:
     def fire(self):
         # Construct a new Missile self.image.get_width() / 2 pixels to the right of this Fighter's x position.
         # Append that Missile to this Fighter's list of Missile objects.
-        pass
+        new_missile = Missile(self.screen, self.x +self.image.get_width()//2, self.y)
+        self.missiles.append(new_missile)
 
     def remove_exploded_missiles(self):
         # Already complete
